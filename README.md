@@ -41,8 +41,8 @@ Aplikasi web untuk manajemen dan monitoring pengajuan pengadaan barang dan jasa 
 ### 1. Clone Repository
 
 ```bash
-git clone <url-repository>
-cd pengadaan-barang
+git clone https://github.com/lupienn/pengadaan-barang-jasa-system.git
+cd pengadaan-barang-jasa-system
 ```
 
 ### 2. Setup Awal
@@ -53,26 +53,13 @@ Jalankan perintah berikut untuk instalasi dependensi, generate key, migrasi data
 composer setup
 ```
 
-### 3. Konfigurasi Environment
-
-Salin file `.env.example` menjadi `.env` dan sesuaikan konfigurasi database:
-
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=pengadaan-barang
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-### 4. Jalankan Seeder (Akun Default)
+### 3. Jalankan Seeder (Akun Default)
 
 ```bash
 php artisan db:seed
 ```
 
-### 5. Jalankan Aplikasi
+### 4. Jalankan Aplikasi
 
 ```bash
 composer run dev
