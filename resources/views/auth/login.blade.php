@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login - {{ config('app.name', 'Procurement System') }}</title>
+    <title>Masuk - Sistem Pengadaan Barang dan Jasa</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://unpkg.com/lucide@latest" onload="lucide.createIcons()"></script>
 </head>
@@ -25,7 +25,15 @@
         <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
             <div class="w-full max-w-md">
                 <div class="text-center lg:text-left mb-10">
-                    <h2 class="text-3xl font-bold text-gray-800">Selamat Datang</h2>
+                    <div class="flex items-center justify-center lg:justify-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-white mr-3">
+                            <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-800">Sistem Pengadaan</h2>
+                            <p class="text-xs text-blue-600 font-medium">Barang &amp; Jasa</p>
+                        </div>
+                    </div>
                     <p class="text-gray-600">Silakan masuk untuk melanjutkan ke dashboard</p>
                 </div>
 
