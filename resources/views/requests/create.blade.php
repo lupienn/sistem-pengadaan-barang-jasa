@@ -1,62 +1,92 @@
 <x-app-layout>
-    <div class="mb-8 flex items-center">
-        <a href="{{ route('requests.index') }}" class="mr-4 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition duration-200">
-            <i data-lucide="arrow-left" class="w-5 h-5 text-gray-600"></i>
+    <div class="mb-8 flex items-center gap-4">
+        <a href="{{ route('requests.index') }}" class="p-2.5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all duration-200 group">
+            <i data-lucide="arrow-left" class="w-5 h-5 text-gray-500 group-hover:text-brand-600 transition-colors"></i>
         </a>
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Buat Pengajuan Baru</h1>
-            <p class="text-gray-600">Isi formulir di bawah ini untuk mengajukan barang atau jasa.</p>
+            <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Buat Pengajuan Baru</h1>
+            <p class="text-gray-500 mt-1">Lengkapi formulir di bawah ini dengan detail barang/jasa yang dibutuhkan.</p>
         </div>
     </div>
 
-    <div class="max-w-2xl bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <form action="{{ route('requests.store') }}" method="POST" class="p-8 space-y-6">
+    <div class="max-w-3xl bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-6 sm:p-8 border-b border-gray-50 bg-gray-50/50 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 shadow-inner">
+                <i data-lucide="file-edit" class="w-5 h-5"></i>
+            </div>
+            <h2 class="text-lg font-bold text-gray-800">Formulir Pengadaan</h2>
+        </div>
+
+        <form action="{{ route('requests.store') }}" method="POST" class="p-6 sm:p-8 space-y-6">
             @csrf
             
-            <div>
-                <label for="nama_barang" class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Barang / Jasa</label>
-                <input type="text" name="nama_barang" id="nama_barang" value="{{ old('nama_barang') }}" required
-                       class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm"
-                       placeholder="Contoh: Laptop Office, Jasa Maintenance AC, dll.">
+            <div class="space-y-1.5">
+                <label for="nama_barang" class="block text-sm font-bold text-gray-700">Nama Barang / Jasa <span class="text-red-500">*</span></label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                        <i data-lucide="box" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <input type="text" name="nama_barang" id="nama_barang" value="{{ old('nama_barang') }}" required
+                           class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
+                           placeholder="Contoh: Laptop Office, Jasa Maintenance AC, dll.">
+                </div>
                 @error('nama_barang')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                 @enderror
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="jumlah" class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Jumlah (Qty)</label>
-                    <input type="number" name="jumlah" id="jumlah" value="{{ old('jumlah', 1) }}" min="1" required
-                           class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm">
+                <div class="space-y-1.5">
+                    <label for="jumlah" class="block text-sm font-bold text-gray-700">Jumlah (Qty) <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <i data-lucide="hash" class="w-5 h-5 text-gray-400"></i>
+                        </div>
+                        <input type="number" name="jumlah" id="jumlah" value="{{ old('jumlah', 1) }}" min="1" required
+                               class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900">
+                    </div>
                     @error('jumlah')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                     @enderror
                 </div>
 
-                <div>
-                    <label for="estimasi_harga" class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Estimasi Harga Satuan (Rp)</label>
-                    <input type="number" name="estimasi_harga" id="estimasi_harga" value="{{ old('estimasi_harga') }}" min="0" required
-                           class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm"
-                           placeholder="0">
+                <div class="space-y-1.5">
+                    <label for="estimasi_harga" class="block text-sm font-bold text-gray-700">Estimasi Harga Satuan <span class="text-red-500">*</span></label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500 font-bold">
+                            Rp
+                        </div>
+                        <input type="number" name="estimasi_harga" id="estimasi_harga" value="{{ old('estimasi_harga') }}" min="0" required
+                               class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900 font-semibold"
+                               placeholder="0">
+                    </div>
                     @error('estimasi_harga')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                     @enderror
                 </div>
             </div>
 
-            <div>
-                <label for="keterangan" class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Keterangan / Alasan Pengadaan</label>
-                <textarea name="keterangan" id="keterangan" rows="4"
-                          class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm"
-                          placeholder="Jelaskan secara singkat kegunaan atau alasan pengadaan ini...">{{ old('keterangan') }}</textarea>
+            <div class="space-y-1.5">
+                <label for="keterangan" class="block text-sm font-bold text-gray-700">Keterangan / Alasan Pengadaan</label>
+                <div class="relative">
+                    <div class="absolute top-3.5 left-3.5 pointer-events-none">
+                        <i data-lucide="align-left" class="w-5 h-5 text-gray-400"></i>
+                    </div>
+                    <textarea name="keterangan" id="keterangan" rows="4"
+                              class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
+                              placeholder="Jelaskan secara singkat tujuan atau urgensi pengadaan ini...">{{ old('keterangan') }}</textarea>
+                </div>
                 @error('keterangan')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="pt-4 border-t border-gray-50 flex items-center justify-end space-x-4">
-                <a href="{{ route('requests.index') }}" class="px-6 py-2 text-sm font-bold text-gray-500 hover:text-gray-700">Batal</a>
-                <button type="submit" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 transition duration-200 focus:ring-4 focus:ring-blue-200">
+            <div class="pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-end gap-3">
+                <a href="{{ route('requests.index') }}" class="w-full sm:w-auto px-6 py-3 text-sm font-bold text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 hover:text-gray-900 rounded-xl transition-colors text-center focus:outline-none focus:ring-4 focus:ring-gray-100">
+                    Batalkan
+                </a>
+                <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-brand-600 text-white font-bold text-sm rounded-xl shadow-md hover:bg-brand-700 hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-brand-200 hover:-translate-y-0.5 flex items-center justify-center">
+                    <i data-lucide="send" class="w-4 h-4 mr-2"></i>
                     Kirim Pengajuan
                 </button>
             </div>

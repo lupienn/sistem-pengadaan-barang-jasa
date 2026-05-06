@@ -1,21 +1,35 @@
 <x-app-layout>
-    <div class="mb-8 flex items-center justify-between">
-        <div class="flex items-center">
-            <a href="{{ route('requests.index') }}" class="mr-4 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition duration-200">
-                <i data-lucide="arrow-left" class="w-5 h-5 text-gray-600"></i>
+    <div class="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+            <a href="{{ route('requests.index') }}" class="p-2.5 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md hover:bg-gray-50 transition-all duration-200 group">
+                <i data-lucide="arrow-left" class="w-5 h-5 text-gray-500 group-hover:text-brand-600 transition-colors"></i>
             </a>
             <div>
-                <h1 class="text-2xl font-bold text-gray-800">Detail Pengajuan #{{ $procurementRequest->id }}</h1>
-                <p class="text-gray-600">Informasi lengkap pengajuan barang/jasa.</p>
+                <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
+                    Detail Pengajuan
+                    <span class="text-xl text-gray-400 font-medium">#{{ str_pad($procurementRequest->id, 4, '0', STR_PAD_LEFT) }}</span>
+                </h1>
             </div>
         </div>
         <div>
             @if($procurementRequest->status === 'Pending')
-                <span class="px-4 py-2 text-sm font-bold rounded-full bg-yellow-100 text-yellow-700 border border-yellow-200 uppercase tracking-wider shadow-sm">Status: Pending</span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider shadow-sm">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-500"></span>
+                    </span>
+                    Status: Menunggu
+                </span>
             @elseif($procurementRequest->status === 'Approved')
-                <span class="px-4 py-2 text-sm font-bold rounded-full bg-green-100 text-green-700 border border-green-200 uppercase tracking-wider shadow-sm">Status: Approved</span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider shadow-sm">
+                    <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                    Status: Disetujui
+                </span>
             @else
-                <span class="px-4 py-2 text-sm font-bold rounded-full bg-red-100 text-red-700 border border-red-200 uppercase tracking-wider shadow-sm">Status: Rejected</span>
+                <span class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider shadow-sm">
+                    <i data-lucide="x-circle" class="w-4 h-4"></i>
+                    Status: Ditolak
+                </span>
             @endif
         </div>
     </div>
@@ -23,32 +37,41 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Details -->
         <div class="lg:col-span-2 space-y-8">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="p-6 border-b border-gray-50 flex items-center">
-                    <i data-lucide="info" class="w-5 h-5 text-blue-500 mr-2"></i>
-                    <h2 class="text-lg font-bold text-gray-800">Informasi Barang / Jasa</h2>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-50 bg-gray-50/50 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 shadow-inner">
+                        <i data-lucide="box" class="w-5 h-5"></i>
+                    </div>
+                    <h2 class="text-lg font-bold text-gray-800">Informasi Barang & Harga</h2>
                 </div>
-                <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Nama Barang / Jasa</p>
-                        <p class="text-lg font-semibold text-gray-800">{{ $procurementRequest->nama_barang }}</p>
+                <div class="p-6 sm:p-8 grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-12">
+                    <div class="md:col-span-2">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="tag" class="w-3.5 h-3.5"></i> Nama Barang / Jasa</p>
+                        <p class="text-xl font-bold text-gray-900">{{ $procurementRequest->nama_barang }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Jumlah (Qty)</p>
-                        <p class="text-lg font-semibold text-gray-800">{{ $procurementRequest->jumlah }} Unit</p>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="hash" class="w-3.5 h-3.5"></i> Jumlah (Qty)</p>
+                        <p class="text-lg font-semibold text-gray-900 flex items-baseline gap-1">{{ $procurementRequest->jumlah }} <span class="text-sm font-medium text-gray-500">Unit/Pcs</span></p>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Estimasi Harga Satuan</p>
-                        <p class="text-lg font-semibold text-gray-800">Rp {{ number_format($procurementRequest->estimasi_harga, 0, ',', '.') }}</p>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="coins" class="w-3.5 h-3.5"></i> Estimasi Harga Satuan</p>
+                        <p class="text-lg font-semibold text-gray-900">Rp {{ number_format($procurementRequest->estimasi_harga, 0, ',', '.') }}</p>
                     </div>
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Total Estimasi Biaya</p>
-                        <p class="text-xl font-bold text-blue-600">Rp {{ number_format($procurementRequest->estimasi_harga * $procurementRequest->jumlah, 0, ',', '.') }}</p>
+                    <div class="md:col-span-2 p-6 bg-brand-50 rounded-xl border border-brand-100/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-bold text-brand-600/80 uppercase tracking-widest mb-1">Total Estimasi Biaya</p>
+                            <p class="text-sm text-brand-600/60">Berdasarkan perkiraan harga saat pengajuan</p>
+                        </div>
+                        <p class="text-3xl font-extrabold text-brand-600 tracking-tight">Rp {{ number_format($procurementRequest->estimasi_harga * $procurementRequest->jumlah, 0, ',', '.') }}</p>
                     </div>
                     <div class="md:col-span-2">
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Keterangan / Alasan</p>
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100 text-gray-700 italic">
-                            {{ $procurementRequest->keterangan ?: 'Tidak ada keterangan tambahan.' }}
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5"><i data-lucide="align-left" class="w-3.5 h-3.5"></i> Keterangan / Alasan</p>
+                        <div class="p-5 bg-gray-50 rounded-xl border border-gray-100 text-gray-700 leading-relaxed shadow-sm">
+                            @if($procurementRequest->keterangan)
+                                {{ $procurementRequest->keterangan }}
+                            @else
+                                <span class="italic text-gray-400">Tidak ada keterangan tambahan yang disertakan oleh pemohon.</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -57,41 +80,58 @@
 
         <!-- Sidebar Info & Actions -->
         <div class="space-y-8">
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div class="p-6 border-b border-gray-50 flex items-center">
-                    <i data-lucide="user" class="w-5 h-5 text-blue-500 mr-2"></i>
-                    <h2 class="text-lg font-bold text-gray-800">Informasi Pemohon</h2>
-                </div>
-                <div class="p-6 space-y-4">
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Nama Staff</p>
-                        <p class="font-semibold text-gray-800">{{ $procurementRequest->user->name }}</p>
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6 border-b border-gray-50 bg-gray-50/50 flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 shadow-inner">
+                        <i data-lucide="user" class="w-5 h-5"></i>
                     </div>
-                    <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Waktu Pengajuan</p>
+                    <h2 class="text-lg font-bold text-gray-800">Pemohon</h2>
+                </div>
+                <div class="p-6 space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-500 to-purple-400 flex items-center justify-center text-white font-bold text-lg shadow-md">
+                            {{ substr($procurementRequest->user->name, 0, 1) }}
+                        </div>
+                        <div>
+                            <p class="font-bold text-gray-900">{{ $procurementRequest->user->name }}</p>
+                            <p class="text-sm text-gray-500 flex items-center gap-1 mt-0.5"><i data-lucide="mail" class="w-3 h-3"></i> {{ $procurementRequest->user->email }}</p>
+                        </div>
+                    </div>
+                    <div class="pt-6 border-t border-gray-100">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="calendar" class="w-3.5 h-3.5"></i> Waktu Pengajuan</p>
                         <p class="font-semibold text-gray-800">{{ $procurementRequest->created_at->format('d M Y, H:i') }}</p>
+                        <p class="text-xs text-gray-500 mt-1">{{ $procurementRequest->created_at->diffForHumans() }}</p>
                     </div>
                 </div>
             </div>
 
             @if(Auth::user()->role === 'manager' && $procurementRequest->status === 'Pending')
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden p-6 space-y-4">
-                <h3 class="text-lg font-bold text-gray-800 mb-2">Tindakan Manager</h3>
-                <div class="flex flex-col space-y-3">
-                    <form action="{{ route('requests.approve', $procurementRequest->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 bg-green-600 border border-transparent rounded-lg font-bold text-sm text-white uppercase tracking-widest hover:bg-green-700 active:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-200 transition duration-200">
-                            <i data-lucide="check" class="w-4 h-4 mr-2"></i>
-                            Approve Pengajuan
-                        </button>
-                    </form>
-                    <form action="{{ route('requests.reject', $procurementRequest->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3 bg-red-600 border border-transparent rounded-lg font-bold text-sm text-white uppercase tracking-widest hover:bg-red-700 active:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-200 transition duration-200">
-                            <i data-lucide="x" class="w-4 h-4 mr-2"></i>
-                            Reject Pengajuan
-                        </button>
-                    </form>
+            <div class="bg-white rounded-2xl shadow-sm border border-brand-200 overflow-hidden relative group">
+                <div class="absolute inset-0 bg-gradient-to-b from-brand-50 to-white pointer-events-none"></div>
+                <div class="p-6 relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-brand-600"></i>
+                        <h3 class="text-lg font-bold text-gray-900">Tindakan Manager</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Silakan tinjau detail pengajuan di atas sebelum memberikan persetujuan atau penolakan.</p>
+                    
+                    <div class="flex flex-col gap-3">
+                        <form action="{{ route('requests.approve', $procurementRequest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENYETUJUI pengajuan ini?');">
+                            @csrf
+                            <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-emerald-600 border border-transparent rounded-xl font-bold text-sm text-white uppercase tracking-widest hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                                <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>
+                                Setujui Pengajuan
+                            </button>
+                        </form>
+                        
+                        <form action="{{ route('requests.reject', $procurementRequest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENOLAK pengajuan ini?');">
+                            @csrf
+                            <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-white border-2 border-rose-100 text-rose-600 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-rose-50 hover:border-rose-200 focus:outline-none focus:ring-4 focus:ring-rose-100 transition-all duration-200">
+                                <i data-lucide="x-circle" class="w-4 h-4 mr-2"></i>
+                                Tolak Pengajuan
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             @endif
