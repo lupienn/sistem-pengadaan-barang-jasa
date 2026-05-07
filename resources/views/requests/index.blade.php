@@ -33,13 +33,13 @@
             <table class="w-full text-left border-collapse">
                 <thead class="bg-white border-b border-gray-100">
                     <tr>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">ID</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap hidden md:table-cell">ID</th>
                         @if(Auth::user()->role === 'manager')
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Pemohon</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden md:table-cell">Pemohon</th>
                         @endif
                         <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Barang</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Qty</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Estimasi Total</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Qty</th>
+                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right hidden md:table-cell">Estimasi Total</th>
                         <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
                         <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Aksi</th>
                     </tr>
@@ -47,10 +47,10 @@
                 <tbody class="divide-y divide-gray-50">
                     @forelse($requests as $request)
                     <tr class="hover:bg-gray-50/80 transition-colors group">
-                        <td class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap">#{{ str_pad($request->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap hidden md:table-cell">#{{ str_pad($request->id, 4, '0', STR_PAD_LEFT) }}</td>
                         
                         @if(Auth::user()->role === 'manager')
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 hidden md:table-cell">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs shadow-sm">
                                     {{ substr($request->user->name, 0, 1) }}
@@ -62,13 +62,29 @@
                         
                         <td class="px-6 py-4">
                             <span class="text-sm font-semibold text-gray-900 line-clamp-2 max-w-[250px]">{{ $request->nama_barang }}</span>
+                            <div class="md:hidden mt-2 flex flex-col gap-1 text-xs text-gray-500">
+                                <div class="flex justify-between">
+                                    <span>ID:</span> <span class="font-bold text-gray-700">#{{ str_pad($request->id, 4, '0', STR_PAD_LEFT) }}</span>
+                                </div>
+                                @if(Auth::user()->role === 'manager')
+                                <div class="flex justify-between">
+                                    <span>Pemohon:</span> <span class="font-semibold text-gray-700">{{ $request->user->name }}</span>
+                                </div>
+                                @endif
+                                <div class="flex justify-between">
+                                    <span>Qty:</span> <span class="font-semibold text-gray-700">{{ $request->jumlah }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
                         </td>
                         
-                        <td class="px-6 py-4 text-sm font-medium text-gray-600 text-center">
+                        <td class="px-6 py-4 text-sm font-medium text-gray-600 text-center hidden md:table-cell">
                             {{ $request->jumlah }}
                         </td>
                         
-                        <td class="px-6 py-4 text-sm text-right whitespace-nowrap">
+                        <td class="px-6 py-4 text-sm text-right whitespace-nowrap hidden md:table-cell">
                             <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
                         </td>
                         

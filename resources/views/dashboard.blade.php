@@ -5,10 +5,6 @@
             <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight">Dashboard Utama</h1>
             <p class="text-sm text-gray-500 mt-1">Ringkasan aktivitas dan status pengadaan barang & jasa.</p>
         </div>
-        <div class="flex items-center gap-2">
-            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Periode:</span>
-            <span class="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 shadow-sm">Semua Waktu</span>
-        </div>
     </div>
 
     {{-- Stat Cards --}}
@@ -93,10 +89,10 @@
                     <thead class="bg-white border-b border-gray-100">
                         <tr>
                             @if(Auth::user()->role === 'manager')
-                            <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Pemohon</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden sm:table-cell">Pemohon</th>
                             @endif
                             <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Barang</th>
-                            <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right">Nilai</th>
+                            <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right hidden sm:table-cell">Nilai</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
                         </tr>
                     </thead>
@@ -104,7 +100,7 @@
                         @forelse($recentRequests as $req)
                         <tr class="hover:bg-gray-50/80 transition-colors group">
                             @if(Auth::user()->role === 'manager')
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 hidden sm:table-cell">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs shadow-sm">
                                         {{ substr($req->user->name ?? '-', 0, 1) }}
@@ -114,10 +110,20 @@
                             </td>
                             @endif
                             <td class="px-6 py-4">
-                                <p class="text-gray-900 font-semibold truncate max-w-[200px]">{{ $req->nama_barang }}</p>
-                                <p class="text-xs text-gray-500 mt-0.5"><span class="font-medium">Qty:</span> {{ $req->jumlah }}</p>
+                                <p class="text-gray-900 font-semibold line-clamp-2 max-w-[200px]">{{ $req->nama_barang }}</p>
+                                <p class="text-xs text-gray-500 mt-1"><span class="font-medium">Qty:</span> {{ $req->jumlah }}</p>
+                                <div class="sm:hidden mt-2 flex flex-col gap-1 text-xs text-gray-500">
+                                    @if(Auth::user()->role === 'manager')
+                                    <div class="flex justify-between">
+                                        <span>Pemohon:</span> <span class="font-semibold text-gray-700">{{ $req->user->name ?? '-' }}</span>
+                                    </div>
+                                    @endif
+                                    <div class="flex justify-between">
+                                        <span>Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($req->estimasi_harga * $req->jumlah, 0, ',', '.') }}</span>
+                                    </div>
+                                </div>
                             </td>
-                            <td class="px-6 py-4 text-right">
+                            <td class="px-6 py-4 text-right hidden sm:table-cell">
                                 <span class="font-bold text-gray-900">Rp {{ number_format($req->estimasi_harga * $req->jumlah, 0, ',', '.') }}</span>
                             </td>
                             <td class="px-6 py-4 text-center">

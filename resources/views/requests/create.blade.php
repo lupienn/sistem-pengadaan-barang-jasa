@@ -9,12 +9,17 @@
         </div>
     </div>
 
-    <div class="max-w-3xl bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="p-6 sm:p-8 border-b border-gray-50 bg-gray-50/50 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 shadow-inner">
-                <i data-lucide="file-edit" class="w-5 h-5"></i>
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" x-data="{ jumlah: {{ old('jumlah', 1) }}, estimasi: {{ old('estimasi_harga', 0) ?: 'null' }} }">
+        <div class="p-6 sm:p-8 border-b border-gray-50 bg-gray-50/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-100 flex items-center justify-center text-brand-600 shadow-inner">
+                    <i data-lucide="file-edit" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-gray-800">Formulir Pengadaan</h2>
+                    <p class="text-xs text-gray-500 mt-0.5">Kolom dengan tanda <span class="text-red-500">*</span> wajib diisi.</p>
+                </div>
             </div>
-            <h2 class="text-lg font-bold text-gray-800">Formulir Pengadaan</h2>
         </div>
 
         <form action="{{ route('requests.store') }}" method="POST" class="p-6 sm:p-8 space-y-6">
@@ -30,6 +35,7 @@
                            class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
                            placeholder="Contoh: Laptop Office, Jasa Maintenance AC, dll.">
                 </div>
+                <p class="text-xs text-gray-500 ml-1">Sebutkan nama barang atau jasa dengan jelas dan spesifik.</p>
                 @error('nama_barang')
                     <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                 @enderror
@@ -42,9 +48,10 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
                             <i data-lucide="hash" class="w-5 h-5 text-gray-400"></i>
                         </div>
-                        <input type="number" name="jumlah" id="jumlah" value="{{ old('jumlah', 1) }}" min="1" required
+                        <input type="number" name="jumlah" id="jumlah" x-model="jumlah" min="1" required
                                class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900">
                     </div>
+                    <p class="text-xs text-gray-500 ml-1">Masukkan jumlah yang dibutuhkan.</p>
                     @error('jumlah')
                         <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                     @enderror
@@ -56,13 +63,25 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500 font-bold">
                             Rp
                         </div>
-                        <input type="number" name="estimasi_harga" id="estimasi_harga" value="{{ old('estimasi_harga') }}" min="0" required
+                        <input type="number" name="estimasi_harga" id="estimasi_harga" x-model="estimasi" min="0" required
                                class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900 font-semibold"
                                placeholder="0">
                     </div>
+                    <p class="text-xs text-gray-500 ml-1">Perkiraan harga untuk 1 unit barang/jasa.</p>
                     @error('estimasi_harga')
                         <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                     @enderror
+                </div>
+            </div>
+            
+            <!-- Kalkulasi Total Harga dengan AlpineJS -->
+            <div class="p-4 bg-brand-50 rounded-xl border border-brand-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2" x-show="jumlah && estimasi" x-transition>
+                <div class="flex items-center gap-2 text-brand-700">
+                    <i data-lucide="calculator" class="w-5 h-5"></i>
+                    <span class="text-sm font-semibold">Total Estimasi Biaya</span>
+                </div>
+                <div class="text-xl font-extrabold text-brand-700">
+                    Rp <span x-text="new Intl.NumberFormat('id-ID').format(jumlah * estimasi)"></span>
                 </div>
             </div>
 
@@ -76,6 +95,7 @@
                               class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
                               placeholder="Jelaskan secara singkat tujuan atau urgensi pengadaan ini...">{{ old('keterangan') }}</textarea>
                 </div>
+                <p class="text-xs text-gray-500 ml-1">Berikan alasan kuat mengapa barang/jasa ini diperlukan untuk memudahkan proses persetujuan.</p>
                 @error('keterangan')
                     <p class="mt-2 text-sm font-medium text-red-600 flex items-center"><i data-lucide="alert-circle" class="w-4 h-4 mr-1"></i> {{ $message }}</p>
                 @enderror
