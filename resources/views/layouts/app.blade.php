@@ -57,11 +57,6 @@
                 <!-- Right Side: Actions & Profile -->
                 <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                     
-                    <!-- Search Button (Mockup) -->
-                    <button class="p-2 sm:p-2.5 text-gray-400 hover:text-brand-400 hover:bg-white/5 rounded-xl transition-all">
-                        <i data-lucide="search" class="w-5 h-5"></i>
-                    </button>
-
                     <div class="h-8 w-px bg-white/10 mx-1 sm:mx-2 hidden sm:block"></div>
 
                     <!-- Profile Dropdown (Alpine) -->

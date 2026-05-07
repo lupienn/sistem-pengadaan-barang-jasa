@@ -40,8 +40,8 @@
                         <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Barang</th>
                         <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Qty</th>
                         <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right hidden md:table-cell">Estimasi Total</th>
-                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
-                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Aksi</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Status</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
@@ -60,22 +60,46 @@
                         </td>
                         @endif
                         
-                        <td class="px-4 md:px-6 py-3 md:py-4 min-w-[180px] md:min-w-0">
-                            <span class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $request->nama_barang }}</span>
-                            <div class="md:hidden mt-2.5 flex flex-col gap-1.5 text-xs text-gray-500 bg-gray-50/80 p-3 rounded-lg border border-gray-100 shadow-sm">
-                                <div class="flex justify-between items-center gap-2">
-                                    <span class="text-gray-400">ID:</span> <span class="font-bold text-gray-700">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</span>
+                        <td class="px-4 md:px-6 py-4 md:py-4 min-w-0 md:min-w-0 w-full md:w-auto">
+                            <!-- Tampilan Desktop -->
+                            <span class="text-sm font-semibold text-gray-900 line-clamp-2 hidden md:block">{{ $request->nama_barang }}</span>
+                            
+                            <!-- Tampilan Mobile (Card Style) -->
+                            <div class="md:hidden flex flex-col gap-3">
+                                <div class="flex items-start justify-between gap-3">
+                                    <span class="text-sm font-bold text-gray-900 line-clamp-2 leading-tight">{{ $request->nama_barang }}</span>
+                                    <div class="flex-shrink-0">
+                                        @if($request->status === 'Pending')
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200 uppercase tracking-wider">Wait</span>
+                                        @elseif($request->status === 'Approved')
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wider">ACC</span>
+                                        @else
+                                        <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200 uppercase tracking-wider">Tolak</span>
+                                        @endif
+                                    </div>
                                 </div>
-                                @if(Auth::user()->role === 'manager')
-                                <div class="flex justify-between items-center gap-2">
-                                    <span class="text-gray-400">Pemohon:</span> <span class="font-semibold text-gray-700 truncate text-right max-w-[140px]" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
-                                </div>
-                                @endif
-                                <div class="flex justify-between items-center gap-2">
-                                    <span class="text-gray-400">Qty:</span> <span class="font-semibold text-gray-700">{{ $request->jumlah }}</span>
-                                </div>
-                                <div class="flex justify-between items-center gap-2">
-                                    <span class="text-gray-400">Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
+                                
+                                <div class="flex flex-col gap-1.5 text-xs text-gray-500 bg-gray-50 p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                                    <div class="flex justify-between items-center gap-2">
+                                        <span class="text-gray-400">ID:</span> <span class="font-bold text-gray-700">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</span>
+                                    </div>
+                                    @if(Auth::user()->role === 'manager')
+                                    <div class="flex justify-between items-center gap-2">
+                                        <span class="text-gray-400">Pemohon:</span> <span class="font-semibold text-gray-700 truncate text-right max-w-[140px]" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
+                                    </div>
+                                    @endif
+                                    <div class="flex justify-between items-center gap-2">
+                                        <span class="text-gray-400">Qty:</span> <span class="font-semibold text-gray-700">{{ $request->jumlah }}</span>
+                                    </div>
+                                    <div class="flex justify-between items-center gap-2">
+                                        <span class="text-gray-400">Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
+                                    </div>
+                                    
+                                    <div class="mt-2.5 pt-2.5 border-t border-gray-100/80">
+                                        <a href="{{ route('requests.show', $request->id) }}" class="flex items-center justify-center px-4 py-2.5 text-brand-600 bg-brand-50 hover:bg-brand-600 hover:text-white rounded-lg transition-colors font-bold w-full text-center shadow-sm">
+                                            <i data-lucide="eye" class="w-4 h-4 mr-2"></i> Lihat Detail
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </td>
@@ -88,23 +112,23 @@
                             <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
                         </td>
                         
-                        <td class="px-4 md:px-6 py-3 md:py-4 text-center whitespace-nowrap">
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-center whitespace-nowrap hidden md:table-cell">
                             @if($request->status === 'Pending')
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span class="hidden sm:inline">Menunggu</span><span class="sm:hidden">Wait</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Menunggu
                             </span>
                             @elseif($request->status === 'Approved')
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> <span class="hidden sm:inline">Disetujui</span><span class="sm:hidden">ACC</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Disetujui
                             </span>
                             @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> <span class="hidden sm:inline">Ditolak</span><span class="sm:hidden">Tolak</span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Ditolak
                             </span>
                             @endif
                         </td>
                         
-                        <td class="px-4 md:px-6 py-3 md:py-4 text-center">
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-center hidden md:table-cell">
                             <a href="{{ route('requests.show', $request->id) }}" class="inline-flex items-center justify-center p-2 sm:p-2.5 text-brand-600 hover:text-white bg-brand-50 hover:bg-brand-600 rounded-lg transition-colors shadow-sm" title="Lihat Detail">
                                 <i data-lucide="eye" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                             </a>
