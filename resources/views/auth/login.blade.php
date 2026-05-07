@@ -62,8 +62,8 @@
 
                     <!-- Mobile Heading inside card -->
                     <div class="lg:hidden mb-8 text-center">
-                        <h2 class="text-xl font-bold text-gray-900">Formulir Login</h2>
-                        <p class="text-xs text-gray-500 mt-1">Masukkan username dan password</p>
+                        <h2 class="text-xl font-extrabold text-gray-900 tracking-tight">Selamat Datang</h2>
+                        <p class="text-sm text-gray-500 mt-1 font-medium">Silakan masuk menggunakan kredensial Anda.</p>
                     </div>
 
                     <!-- Session Status -->
