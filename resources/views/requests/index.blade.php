@@ -47,15 +47,15 @@
                 <tbody class="divide-y divide-gray-50">
                     @forelse($requests as $request)
                     <tr class="hover:bg-gray-50/80 transition-colors group">
-                        <td class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap hidden md:table-cell">#{{ str_pad($request->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap hidden md:table-cell">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</td>
                         
                         @if(Auth::user()->role === 'manager')
                         <td class="px-6 py-4 hidden md:table-cell">
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs shadow-sm">
-                                    {{ substr($request->user->name, 0, 1) }}
+                                <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs shadow-sm flex-shrink-0">
+                                    {{ substr($request->user->name ?? '-', 0, 1) }}
                                 </div>
-                                <span class="text-sm font-semibold text-gray-900 whitespace-nowrap">{{ $request->user->name }}</span>
+                                <span class="text-sm font-semibold text-gray-900 truncate max-w-[150px]" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
                             </div>
                         </td>
                         @endif
@@ -64,11 +64,11 @@
                             <span class="text-sm font-semibold text-gray-900 line-clamp-2 max-w-[250px]">{{ $request->nama_barang }}</span>
                             <div class="md:hidden mt-2 flex flex-col gap-1 text-xs text-gray-500">
                                 <div class="flex justify-between">
-                                    <span>ID:</span> <span class="font-bold text-gray-700">#{{ str_pad($request->id, 4, '0', STR_PAD_LEFT) }}</span>
+                                    <span>ID:</span> <span class="font-bold text-gray-700">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</span>
                                 </div>
                                 @if(Auth::user()->role === 'manager')
                                 <div class="flex justify-between">
-                                    <span>Pemohon:</span> <span class="font-semibold text-gray-700">{{ $request->user->name }}</span>
+                                    <span>Pemohon:</span> <span class="font-semibold text-gray-700 truncate max-w-[120px] text-right" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
                                 </div>
                                 @endif
                                 <div class="flex justify-between">

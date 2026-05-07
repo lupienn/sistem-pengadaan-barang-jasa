@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Pengadaan Barang & Jasa') }}</title>
+    <title>{{ config('app.name', 'Sistem Monitoring Pengadaan Barang & Jasa') }}</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,42 +27,53 @@
         <div class="flex-1 flex flex-col overflow-hidden relative">
             
             <!-- Top Header -->
-            <header class="bg-white/80 backdrop-blur-md border-b border-gray-100 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-30 sticky top-0">
-                <!-- Left Side: Mobile Menu Button & Title -->
-                <div class="flex items-center gap-4">
-                    <button @click="sidebarOpen = true" class="md:hidden text-gray-500 hover:text-brand-600 focus:outline-none transition-colors">
+            <header class="bg-dark-900 border-b border-white/10 h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-30 sticky top-0 shadow-md">
+                <!-- Left Side: Mobile Menu Button & Title / Desktop Greeting -->
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <button @click="sidebarOpen = true" class="md:hidden p-2 -ml-2 rounded-xl text-gray-400 hover:bg-white/10 hover:text-white focus:outline-none transition-all">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
-                    <div class="md:hidden">
-                        <h1 class="text-lg font-bold text-gray-900 tracking-tight">Pengadaan</h1>
+                    
+                    <!-- Mobile Title -->
+                    <div class="md:hidden flex flex-col">
+                        <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight leading-tight truncate max-w-[160px] sm:max-w-[250px]">Monitoring Pengadaan</h1>
+                        <span class="text-[10px] text-brand-400 font-bold uppercase tracking-wider">Barang & Jasa</span>
                     </div>
-                    <div class="hidden md:flex flex-col justify-center">
-                        <h2 class="text-sm text-gray-500 font-medium">Selamat datang kembali,</h2>
-                        <p class="text-sm font-bold text-gray-900 leading-tight">{{ Auth::user()->name }} <span class="text-xs font-normal text-brand-600 bg-brand-50 px-2 py-0.5 rounded-full ml-1">{{ ucfirst(Auth::user()->role) }}</span></p>
+
+                    <!-- Desktop Greeting -->
+                    <div class="hidden md:flex items-center gap-4">
+                        <div class="flex flex-col justify-center">
+                            <h2 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Selamat datang kembali</h2>
+                            <div class="flex items-center gap-2 mt-0.5">
+                                <p class="text-lg font-extrabold text-white leading-tight">{{ Auth::user()->name }}</p>
+                                <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-xs font-bold bg-brand-500/20 text-brand-300 border border-brand-500/30 shadow-sm">
+                                    {{ ucfirst(Auth::user()->role) }}
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Right Side: User Profile -->
-                <div class="flex items-center gap-4">
-                    <!-- Notifications (Mockup) -->
-                    <button class="relative p-2 text-gray-400 hover:text-brand-600 transition-colors rounded-full hover:bg-gray-100">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
-                        <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
+                <!-- Right Side: Actions & Profile -->
+                <div class="flex items-center gap-2 sm:gap-4">
+                    
+                    <!-- Search Button (Mockup) -->
+                    <button class="p-2 sm:p-2.5 text-gray-400 hover:text-brand-400 hover:bg-white/5 rounded-xl transition-all">
+                        <i data-lucide="search" class="w-5 h-5"></i>
                     </button>
 
-                    <div class="h-8 w-px bg-gray-200"></div>
+                    <div class="h-8 w-px bg-white/10 mx-1 sm:mx-2 hidden sm:block"></div>
 
                     <!-- Profile Dropdown (Alpine) -->
                     <div class="relative" x-data="{ profileOpen: false }" @click.away="profileOpen = false">
-                        <button @click="profileOpen = !profileOpen" class="flex items-center gap-3 focus:outline-none group">
-                            <div class="text-right hidden sm:block">
-                                <p class="text-sm font-semibold text-gray-700 group-hover:text-brand-600 transition-colors">{{ Auth::user()->name }}</p>
-                                <p class="text-xs text-gray-500">{{ ucfirst(Auth::user()->role) }}</p>
-                            </div>
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-brand-400 flex items-center justify-center text-white font-bold shadow-md ring-2 ring-white group-hover:ring-brand-100 transition-all">
+                        <button @click="profileOpen = !profileOpen" class="flex items-center gap-3 p-1 pr-2 sm:pr-3 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 focus:outline-none transition-all group">
+                            <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
                                 {{ substr(Auth::user()->name, 0, 1) }}
                             </div>
-                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 group-hover:text-brand-500 transition-colors hidden sm:block"></i>
+                            <div class="text-right hidden lg:block">
+                                <p class="text-sm font-bold text-gray-200 group-hover:text-white transition-colors">{{ explode(' ', Auth::user()->name)[0] }}</p>
+                            </div>
+                            <i data-lucide="chevron-down" class="w-4 h-4 text-gray-400 group-hover:text-white transition-colors hidden sm:block"></i>
                         </button>
 
                         <!-- Dropdown Menu -->
@@ -73,16 +84,20 @@
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                             class="absolute right-0 mt-3 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50"
+                             class="absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-50 overflow-hidden"
                              style="display: none;">
-                            <a href="{{ route('profile.edit') }}" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors">
-                                <i data-lucide="user" class="w-4 h-4 mr-3"></i> Profil Saya
+                            <div class="px-4 py-3 border-b border-gray-50 bg-gray-50/50 mb-2">
+                                <p class="text-sm font-bold text-gray-900 truncate">{{ Auth::user()->name }}</p>
+                                <p class="text-xs font-medium text-gray-500 truncate">{{ Auth::user()->email ?? 'Akun '.ucfirst(Auth::user()->role) }}</p>
+                            </div>
+                            <a href="{{ route('profile.edit') }}" class="flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-brand-50 hover:text-brand-600 transition-colors group">
+                                <i data-lucide="user" class="w-4 h-4 mr-3 text-gray-400 group-hover:text-brand-500 transition-colors"></i> Profil Saya
                             </a>
-                            <div class="h-px bg-gray-100 my-2"></div>
+                            <div class="h-px bg-gray-100 my-1"></div>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button type="submit" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                    <i data-lucide="log-out" class="w-4 h-4 mr-3"></i> Keluar
+                                <button type="submit" class="flex items-center w-full px-4 py-2.5 text-sm font-bold text-rose-600 hover:bg-rose-50 transition-colors group">
+                                    <i data-lucide="log-out" class="w-4 h-4 mr-3 text-rose-400 group-hover:text-rose-600 transition-colors"></i> Keluar
                                 </button>
                             </form>
                         </div>

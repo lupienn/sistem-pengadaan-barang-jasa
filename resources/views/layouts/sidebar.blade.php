@@ -21,8 +21,8 @@
                 <i data-lucide="package" class="w-6 h-6 text-white"></i>
             </div>
             <div class="flex flex-col">
-                <span class="text-lg font-bold tracking-wide text-white leading-tight">Pengadaan</span>
-                <span class="text-xs text-brand-400 font-medium">Sistem Monitoring</span>
+                <span class="text-lg font-bold tracking-wide text-white leading-tight">Monitoring</span>
+                <span class="text-[10px] text-brand-400 font-medium uppercase tracking-wider mt-0.5">Pengadaan Barang & Jasa</span>
             </div>
         </div>
         <!-- Close button (Mobile only) -->
