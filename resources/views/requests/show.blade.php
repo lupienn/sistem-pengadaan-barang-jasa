@@ -7,7 +7,7 @@
             <div>
                 <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-3">
                     Detail Pengajuan
-                    <span class="text-xl text-gray-400 font-medium">#{{ str_pad($procurementRequest->id, 4, '0', STR_PAD_LEFT) }}</span>
+                    <span class="text-xl text-gray-400 font-medium">{{ str_pad($procurementRequest->id, 2, '0', STR_PAD_LEFT) }}</span>
                 </h1>
             </div>
         </div>
@@ -50,7 +50,7 @@
                         <p class="text-xl font-bold text-gray-900">{{ $procurementRequest->nama_barang }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="hash" class="w-3.5 h-3.5"></i> Jumlah (Qty)</p>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><i data-lucide="boxes" class="w-3.5 h-3.5"></i> Jumlah (Qty)</p>
                         <p class="text-lg font-semibold text-gray-900 flex items-baseline gap-1">{{ $procurementRequest->jumlah }} <span class="text-sm font-medium text-gray-500">Unit/Pcs</span></p>
                     </div>
                     <div>

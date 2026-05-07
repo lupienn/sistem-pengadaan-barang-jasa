@@ -33,24 +33,24 @@
             <table class="w-full text-left border-collapse">
                 <thead class="bg-white border-b border-gray-100">
                     <tr>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap hidden md:table-cell">ID</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap hidden md:table-cell">ID</th>
                         @if(Auth::user()->role === 'manager')
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden md:table-cell">Pemohon</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider hidden md:table-cell">Pemohon</th>
                         @endif
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Barang</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Qty</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right hidden md:table-cell">Estimasi Total</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
-                        <th class="px-6 py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Aksi</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Barang</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center hidden md:table-cell">Qty</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right hidden md:table-cell">Estimasi Total</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Status</th>
+                        <th class="px-4 md:px-6 py-3 md:py-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-50">
                     @forelse($requests as $request)
                     <tr class="hover:bg-gray-50/80 transition-colors group">
-                        <td class="px-6 py-4 text-sm font-bold text-gray-900 whitespace-nowrap hidden md:table-cell">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</td>
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-sm font-bold text-gray-900 whitespace-nowrap hidden md:table-cell">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</td>
                         
                         @if(Auth::user()->role === 'manager')
-                        <td class="px-6 py-4 hidden md:table-cell">
+                        <td class="px-4 md:px-6 py-3 md:py-4 hidden md:table-cell">
                             <div class="flex items-center gap-3">
                                 <div class="w-8 h-8 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 font-bold text-xs shadow-sm flex-shrink-0">
                                     {{ substr($request->user->name ?? '-', 0, 1) }}
@@ -60,53 +60,53 @@
                         </td>
                         @endif
                         
-                        <td class="px-6 py-4">
-                            <span class="text-sm font-semibold text-gray-900 line-clamp-2 max-w-[250px]">{{ $request->nama_barang }}</span>
-                            <div class="md:hidden mt-2 flex flex-col gap-1 text-xs text-gray-500">
-                                <div class="flex justify-between">
-                                    <span>ID:</span> <span class="font-bold text-gray-700">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</span>
+                        <td class="px-4 md:px-6 py-3 md:py-4 min-w-[180px] md:min-w-0">
+                            <span class="text-sm font-semibold text-gray-900 line-clamp-2">{{ $request->nama_barang }}</span>
+                            <div class="md:hidden mt-2.5 flex flex-col gap-1.5 text-xs text-gray-500 bg-gray-50/80 p-3 rounded-lg border border-gray-100 shadow-sm">
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="text-gray-400">ID:</span> <span class="font-bold text-gray-700">{{ str_pad($request->id, 2, '0', STR_PAD_LEFT) }}</span>
                                 </div>
                                 @if(Auth::user()->role === 'manager')
-                                <div class="flex justify-between">
-                                    <span>Pemohon:</span> <span class="font-semibold text-gray-700 truncate max-w-[120px] text-right" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="text-gray-400">Pemohon:</span> <span class="font-semibold text-gray-700 truncate text-right max-w-[140px]" title="{{ $request->user->name ?? '-' }}">{{ $request->user->name ?? '-' }}</span>
                                 </div>
                                 @endif
-                                <div class="flex justify-between">
-                                    <span>Qty:</span> <span class="font-semibold text-gray-700">{{ $request->jumlah }}</span>
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="text-gray-400">Qty:</span> <span class="font-semibold text-gray-700">{{ $request->jumlah }}</span>
                                 </div>
-                                <div class="flex justify-between">
-                                    <span>Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
+                                <div class="flex justify-between items-center gap-2">
+                                    <span class="text-gray-400">Total:</span> <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
                                 </div>
                             </div>
                         </td>
                         
-                        <td class="px-6 py-4 text-sm font-medium text-gray-600 text-center hidden md:table-cell">
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-sm font-medium text-gray-600 text-center hidden md:table-cell">
                             {{ $request->jumlah }}
                         </td>
                         
-                        <td class="px-6 py-4 text-sm text-right whitespace-nowrap hidden md:table-cell">
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-sm text-right whitespace-nowrap hidden md:table-cell">
                             <span class="font-bold text-brand-600">Rp {{ number_format($request->estimasi_harga * $request->jumlah, 0, ',', '.') }}</span>
                         </td>
                         
-                        <td class="px-6 py-4 text-center whitespace-nowrap">
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-center whitespace-nowrap">
                             @if($request->status === 'Pending')
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Menunggu
+                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> <span class="hidden sm:inline">Menunggu</span><span class="sm:hidden">Wait</span>
                             </span>
                             @elseif($request->status === 'Approved')
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Disetujui
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> <span class="hidden sm:inline">Disetujui</span><span class="sm:hidden">ACC</span>
                             </span>
                             @else
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
-                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Ditolak
+                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> <span class="hidden sm:inline">Ditolak</span><span class="sm:hidden">Tolak</span>
                             </span>
                             @endif
                         </td>
                         
-                        <td class="px-6 py-4 text-center">
-                            <a href="{{ route('requests.show', $request->id) }}" class="inline-flex items-center justify-center p-2 text-brand-600 hover:text-white bg-brand-50 hover:bg-brand-600 rounded-lg transition-colors" title="Lihat Detail">
-                                <i data-lucide="eye" class="w-4 h-4"></i>
+                        <td class="px-4 md:px-6 py-3 md:py-4 text-center">
+                            <a href="{{ route('requests.show', $request->id) }}" class="inline-flex items-center justify-center p-2 sm:p-2.5 text-brand-600 hover:text-white bg-brand-50 hover:bg-brand-600 rounded-lg transition-colors shadow-sm" title="Lihat Detail">
+                                <i data-lucide="eye" class="w-4 h-4 sm:w-5 sm:h-5"></i>
                             </a>
                         </td>
                     </tr>

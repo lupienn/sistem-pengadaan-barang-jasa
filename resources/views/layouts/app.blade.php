@@ -29,15 +29,15 @@
             <!-- Top Header -->
             <header class="bg-dark-900 border-b border-white/10 h-16 md:h-20 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-30 sticky top-0 shadow-md">
                 <!-- Left Side: Mobile Menu Button & Title / Desktop Greeting -->
-                <div class="flex items-center gap-3 sm:gap-5">
-                    <button @click="sidebarOpen = true" class="md:hidden p-2 -ml-2 rounded-xl text-gray-400 hover:bg-white/10 hover:text-white focus:outline-none transition-all">
+                <div class="flex items-center gap-3 sm:gap-5 flex-1 min-w-0">
+                    <button @click="sidebarOpen = true" class="md:hidden p-2 -ml-2 rounded-xl text-gray-400 hover:bg-white/10 hover:text-white focus:outline-none transition-all flex-shrink-0">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                     
                     <!-- Mobile Title -->
-                    <div class="md:hidden flex flex-col">
-                        <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight leading-tight truncate max-w-[160px] sm:max-w-[250px]">Monitoring Pengadaan</h1>
-                        <span class="text-[10px] text-brand-400 font-bold uppercase tracking-wider">Barang & Jasa</span>
+                    <div class="md:hidden flex flex-col min-w-0 flex-1">
+                        <h1 class="text-base sm:text-lg font-extrabold text-white tracking-tight leading-tight truncate">Monitoring Pengadaan</h1>
+                        <span class="text-[10px] text-brand-400 font-bold uppercase tracking-wider truncate">Barang & Jasa</span>
                     </div>
 
                     <!-- Desktop Greeting -->
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- Right Side: Actions & Profile -->
-                <div class="flex items-center gap-2 sm:gap-4">
+                <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                     
                     <!-- Search Button (Mockup) -->
                     <button class="p-2 sm:p-2.5 text-gray-400 hover:text-brand-400 hover:bg-white/5 rounded-xl transition-all">
