@@ -151,8 +151,12 @@
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
                 customClass: {
-                    confirmButton: 'px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider ml-2',
-                    cancelButton: 'px-4 py-2 bg-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider'
+                    popup: 'rounded-2xl p-6',
+                    title: 'text-xl font-extrabold text-gray-900',
+                    htmlContainer: 'text-sm text-gray-500 mt-2',
+                    actions: 'w-full flex flex-col-reverse sm:flex-row gap-3 mt-6 m-0 px-0',
+                    confirmButton: 'w-full sm:w-auto px-6 py-3.5 bg-emerald-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider m-0 hover:bg-emerald-700 transition-colors shadow-sm',
+                    cancelButton: 'w-full sm:w-auto px-6 py-3.5 bg-white border border-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-gray-50 transition-colors m-0'
                 },
                 buttonsStyling: false
             }).then((result) => {
@@ -174,8 +178,12 @@
                 cancelButtonText: 'Batal',
                 reverseButtons: true,
                 customClass: {
-                    confirmButton: 'px-4 py-2 bg-rose-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider ml-2',
-                    cancelButton: 'px-4 py-2 bg-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider'
+                    popup: 'rounded-2xl p-6',
+                    title: 'text-xl font-extrabold text-gray-900',
+                    htmlContainer: 'text-sm text-gray-500 mt-2',
+                    actions: 'w-full flex flex-col-reverse sm:flex-row gap-3 mt-6 m-0 px-0',
+                    confirmButton: 'w-full sm:w-auto px-6 py-3.5 bg-rose-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider m-0 hover:bg-rose-700 transition-colors shadow-sm',
+                    cancelButton: 'w-full sm:w-auto px-6 py-3.5 bg-white border border-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-gray-50 transition-colors m-0'
                 },
                 buttonsStyling: false
             }).then((result) => {
