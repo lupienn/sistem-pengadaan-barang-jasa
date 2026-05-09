@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['username' => 'staff'],
             [
-                'name' => 'Staff Pengadaan',
+                'name' => 'Staff',
                 'password' => Hash::make('password'),
                 'role' => 'staff',
             ]

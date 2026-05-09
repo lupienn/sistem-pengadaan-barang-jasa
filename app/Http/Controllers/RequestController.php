@@ -13,9 +13,9 @@ class RequestController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'manager') {
-            $requests = ProcurementRequest::with('user')->latest()->get();
+            $requests = ProcurementRequest::with('user')->orderBy('id')->get();
         } else {
-            $requests = ProcurementRequest::where('user_id', $user->id)->latest()->get();
+            $requests = ProcurementRequest::where('user_id', $user->id)->orderBy('id')->get();
         }
 
         return view('requests.index', compact('requests'));

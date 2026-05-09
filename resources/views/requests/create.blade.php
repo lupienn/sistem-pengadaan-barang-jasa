@@ -46,7 +46,7 @@
                     <label for="jumlah" class="block text-sm font-bold text-gray-700">Jumlah (Qty) <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                            <i data-lucide="hash" class="w-5 h-5 text-gray-400"></i>
+                            <i data-lucide="boxes" class="w-5 h-5 text-gray-400"></i>
                         </div>
                         <input type="number" name="jumlah" id="jumlah" x-model="jumlah" min="1" required
                                class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900">

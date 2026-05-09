@@ -21,12 +21,6 @@
                 </div>
                 <input type="text" class="block w-full pl-10 pr-3 py-2 border border-gray-200 rounded-xl leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 sm:text-sm transition-shadow" placeholder="Cari barang atau pemohon...">
             </div>
-            <div class="flex items-center gap-2">
-                <button class="inline-flex items-center px-4 py-2 border border-gray-200 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-colors">
-                    <i data-lucide="filter" class="w-4 h-4 mr-2 text-gray-400"></i>
-                    Filter
-                </button>
-            </div>
         </div>
 
         <div class="overflow-x-auto">
