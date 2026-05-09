@@ -116,17 +116,17 @@
                     <p class="text-sm text-gray-500 mb-6">Silakan tinjau detail pengajuan di atas sebelum memberikan persetujuan atau penolakan.</p>
                     
                     <div class="flex flex-col gap-3">
-                        <form action="{{ route('requests.approve', $procurementRequest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENYETUJUI pengajuan ini?');">
+                        <form id="approve-form" action="{{ route('requests.approve', $procurementRequest->id) }}" method="POST">
                             @csrf
-                            <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-emerald-600 border border-transparent rounded-xl font-bold text-sm text-white uppercase tracking-widest hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5">
+                            <button type="button" onclick="confirmApprove()" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-emerald-600 border border-transparent rounded-xl font-bold text-sm text-white uppercase tracking-widest hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-200 transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                                 <i data-lucide="check-circle" class="w-4 h-4 mr-2"></i>
                                 Setujui Pengajuan
                             </button>
                         </form>
                         
-                        <form action="{{ route('requests.reject', $procurementRequest->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENOLAK pengajuan ini?');">
+                        <form id="reject-form" action="{{ route('requests.reject', $procurementRequest->id) }}" method="POST">
                             @csrf
-                            <button type="submit" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-white border-2 border-rose-100 text-rose-600 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-rose-50 hover:border-rose-200 focus:outline-none focus:ring-4 focus:ring-rose-100 transition-all duration-200">
+                            <button type="button" onclick="confirmReject()" class="w-full inline-flex justify-center items-center px-6 py-3.5 bg-white border-2 border-rose-100 text-rose-600 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-rose-50 hover:border-rose-200 focus:outline-none focus:ring-4 focus:ring-rose-100 transition-all duration-200">
                                 <i data-lucide="x-circle" class="w-4 h-4 mr-2"></i>
                                 Tolak Pengajuan
                             </button>
@@ -137,4 +137,52 @@
             @endif
         </div>
     </div>
+
+    <script>
+        function confirmApprove() {
+            Swal.fire({
+                title: 'Setujui Pengajuan?',
+                text: "Apakah Anda yakin ingin menyetujui pengajuan ini?",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#059669', // Emerald 600
+                cancelButtonColor: '#9ca3af', // Gray 400
+                confirmButtonText: 'Ya, Setujui',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: 'px-4 py-2 bg-emerald-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider ml-2',
+                    cancelButton: 'px-4 py-2 bg-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('approve-form').submit();
+                }
+            })
+        }
+
+        function confirmReject() {
+            Swal.fire({
+                title: 'Tolak Pengajuan?',
+                text: "Apakah Anda yakin ingin menolak pengajuan ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e11d48', // Rose 600
+                cancelButtonColor: '#9ca3af', // Gray 400
+                confirmButtonText: 'Ya, Tolak',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                customClass: {
+                    confirmButton: 'px-4 py-2 bg-rose-600 text-white rounded-xl font-bold text-sm uppercase tracking-wider ml-2',
+                    cancelButton: 'px-4 py-2 bg-gray-200 text-gray-700 rounded-xl font-bold text-sm uppercase tracking-wider'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('reject-form').submit();
+                }
+            })
+        }
+    </script>
 </x-app-layout>

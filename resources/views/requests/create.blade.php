@@ -33,7 +33,7 @@
                     </div>
                     <input type="text" name="nama_barang" id="nama_barang" value="{{ old('nama_barang') }}" required
                            class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
-                           placeholder="Contoh: Laptop Office, Jasa Maintenance AC, dll.">
+                           placeholder="">
                 </div>
                 <p class="text-xs text-gray-500 ml-1">Sebutkan nama barang atau jasa dengan jelas dan spesifik.</p>
                 @error('nama_barang')
@@ -93,7 +93,7 @@
                     </div>
                     <textarea name="keterangan" id="keterangan" rows="4"
                               class="block w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 transition-all shadow-sm bg-gray-50/50 focus:bg-white text-gray-900"
-                              placeholder="Jelaskan secara singkat tujuan atau urgensi pengadaan ini...">{{ old('keterangan') }}</textarea>
+                              placeholder="">{{ old('keterangan') }}</textarea>
                 </div>
                 <p class="text-xs text-gray-500 ml-1">Berikan alasan kuat mengapa barang/jasa ini diperlukan untuk memudahkan proses persetujuan.</p>
                 @error('keterangan')
